@@ -89,9 +89,7 @@ transport:
 tls:
   sni: bing.com
   insecure: true
-bandwidth:
-  up: 100 mbps
-  down: 100 mbps
+ignoreClientBandwidth: true
 quic:
   initStreamReceiveWindow: 8388608
   maxStreamReceiveWindow: 8388608
