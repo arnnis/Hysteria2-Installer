@@ -98,6 +98,11 @@ quic:
   maxIdleTimeout: 60s
   keepAlivePeriod: 60s
   disablePathMTUDiscovery: false
+masquerade: 
+  type: proxy
+  proxy:
+    url: https://news.ycombinator.com/ 
+    rewriteHost: true
 fastOpen: true
 lazy: true
 socks5:
