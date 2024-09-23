@@ -87,7 +87,7 @@ auth: $new_password
 transport:
   type: udp
 tls:
-  sni: bing.com
+  sni: https://news.ycombinator.com
   insecure: true
 ignoreClientBandwidth: true
 quic:
