@@ -105,6 +105,11 @@ masquerade:
     rewriteHost: true
 fastOpen: true
 lazy: true
+outbounds:
+  - name: my_outbound_2
+    type: socks5
+    socks5:
+      addr: 127.0.0.1:25344 
 socks5:
   listen: 127.0.0.1:10808
 http:
@@ -186,6 +191,9 @@ read -p "Enter a password (or press enter for a random password): " password
 
 # Create new config.yaml template based on your requirement
 config_yaml="listen: :$port
+tls:
+  cert: /root/hysteria/ca.crt
+  key: /root/hysteria/ca.key
 auth:
   type: password
   password: $password
