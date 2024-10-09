@@ -14,7 +14,7 @@ print_with_delay() {
 # Introduction animation
 echo ""
 echo ""
-print_with_delay "hysteria2-installer by DEATHLINE | @NamelesGhoul" 0.1
+echo "hysteria2-installer by DEATHLINE | @NamelesGhoul" 0.1
 echo ""
 echo ""
 
@@ -200,10 +200,7 @@ quic:
   maxIdleTimeout: 60s
   maxIncomingStreams: 1024
   disablePathMTUDiscovery: false
-bandwidth:
-  up: 1 gbps
-  down: 1 gbps
-ignoreClientBandwidth: false
+ignoreClientBandwidth: true
 disableUDP: false
 udpIdleTimeout: 60s
 resolver:
