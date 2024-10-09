@@ -191,9 +191,6 @@ read -p "Enter a password (or press enter for a random password): " password
 
 # Create new config.yaml template based on your requirement
 config_yaml="listen: :$port
-tls:
-  cert: /root/hysteria/ca.crt
-  key: /root/hysteria/ca.key
 auth:
   type: password
   password: $password
