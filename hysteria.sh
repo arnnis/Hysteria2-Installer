@@ -105,11 +105,6 @@ masquerade:
     rewriteHost: true
 fastOpen: true
 lazy: true
-outbounds:
-  - name: my_outbound_2
-    type: socks5
-    socks5:
-      addr: 127.0.0.1:25344 
 socks5:
   listen: 127.0.0.1:10808
 http:
