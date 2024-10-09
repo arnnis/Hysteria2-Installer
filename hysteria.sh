@@ -186,6 +186,9 @@ read -p "Enter a password (or press enter for a random password): " password
 
 # Create new config.yaml template based on your requirement
 config_yaml="listen: :$port
+tls:
+  cert: /root/hysteria/ca.crt
+  key: /root/hysteria/ca.key
 auth:
   type: password
   password: $password
@@ -197,7 +200,10 @@ quic:
   maxIdleTimeout: 60s
   maxIncomingStreams: 1024
   disablePathMTUDiscovery: false
-ignoreClientBandwidth: true
+bandwidth:
+  up: 1 gbps
+  down: 1 gbps
+ignoreClientBandwidth: false
 disableUDP: false
 udpIdleTimeout: 60s
 resolver:
