@@ -208,11 +208,6 @@ quic:
 ignoreClientBandwidth: true
 disableUDP: false
 udpIdleTimeout: 60s
-outbounds:
-  - name: my_outbound_2
-    type: socks5
-    socks5:
-      addr: 127.0.0.1:25344 
 resolver:
   type: udp
   tcp:
