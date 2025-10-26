@@ -1,3 +1,4 @@
+```bash
 #!/bin/bash
 
 # Function to print characters with delay
@@ -40,8 +41,8 @@ install_warp() {
     fi
 
     echo "Installing Cloudflare WARP..."
-    sudo curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg > /dev/null 2>&1
-    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-warp.list > /dev/null 2>&1
+    curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg > /dev/null 2>&1
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list > /dev/null 2>&1
     sudo apt-get update > /dev/null 2>&1
     sudo apt-get install -y cloudflare-warp > /dev/null 2>&1
 
@@ -49,7 +50,7 @@ install_warp() {
     sudo systemctl enable --now warp-svc > /dev/null 2>&1
 
     # Register and configure
-    warp-cli registration new > /dev/null 2>&1
+    warp-cli register > /dev/null 2>&1
     warp-cli set-mode proxy > /dev/null 2>&1
     warp-cli connect > /dev/null 2>&1
     warp-cli enable-always-on > /dev/null 2>&1
@@ -69,7 +70,7 @@ uninstall_warp() {
     sudo systemctl stop warp-svc > /dev/null 2>&1
     sudo systemctl disable warp-svc > /dev/null 2>&1
     sudo apt-get purge -y cloudflare-warp > /dev/null 2>&1
-    sudo rm -f /etc/apt/sources.list.d/cloudflare-warp.list > /dev/null 2>&1
+    sudo rm -f /etc/apt/sources.list.d/cloudflare-client.list > /dev/null 2>&1
     sudo apt-get update > /dev/null 2>&1
     echo "Cloudflare WARP uninstalled."
 }
@@ -143,7 +144,7 @@ auth: $new_password
 transport:
   type: udp
 tls:
-  sni: https://news.ycombinator.com
+  sni: news.ycombinator.com
   insecure: true
 ignoreClientBandwidth: true
 quic:
@@ -157,15 +158,10 @@ quic:
 masquerade: 
   type: proxy
   proxy:
-    url: https://news.ycombinator.com/ 
+    url: https://news.ycombinator.com/
     rewriteHost: true
 fastOpen: true
 lazy: true
-outbounds:
-  - name: my_outbound_2
-    type: socks5
-    socks5:
-      addr: 127.0.0.1:25344 
 socks5:
   listen: 127.0.0.1:10808
 http:
@@ -182,7 +178,7 @@ http:
         3)
             # Uninstall
             # Check if WARP was configured (by checking config.yaml for outbounds socks5)
-            if grep -q 'type: socks5' /root/hysteria/config.yaml; then
+            if [ -f "/root/hysteria/config.yaml" ] && grep -q 'type: socks5' /root/hysteria/config.yaml; then
                 uninstall_warp
             fi
 
@@ -385,3 +381,4 @@ nekobox_url="hysteria2://$password@$PUBLIC_IP:$port/?insecure=1&sni=bing.com"
 echo ""
 echo "$nekobox_url"
 echo ""
+```
