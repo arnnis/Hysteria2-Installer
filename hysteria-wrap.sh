@@ -1,4 +1,3 @@
-```bash
 #!/bin/bash
 
 # Function to print characters with delay
@@ -381,4 +380,3 @@ nekobox_url="hysteria2://$password@$PUBLIC_IP:$port/?insecure=1&sni=bing.com"
 echo ""
 echo "$nekobox_url"
 echo ""
-```
