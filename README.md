@@ -19,5 +19,5 @@ Hysteria VPN Installer allows users to effortlessly set up the Hysteria VPN serv
 1. **Download and Run the Installer Script**
 
    ```bash
-   bash <(curl -fsSL https://raw.githubusercontent.com/arnnis/Hysteria2-Installer/main/hysteria-wrap.sh)
+   bash <(curl -fsSL https://raw.githubusercontent.com/arnnis/Hysteria2-Installer/main/hysteria.sh)
    ```
