@@ -49,7 +49,7 @@ install_warp() {
     sudo systemctl enable --now warp-svc > /dev/null 2>&1
 
     # Register and configure
-    warp-cli register > /dev/null 2>&1
+    warp-cli registration new > /dev/null 2>&1
     warp-cli set-mode proxy > /dev/null 2>&1
     warp-cli connect > /dev/null 2>&1
     warp-cli enable-always-on > /dev/null 2>&1
@@ -143,9 +143,11 @@ auth: $new_password
 transport:
   type: udp
 tls:
-  sni: news.ycombinator.com
+  sni: bing.com
   insecure: true
-ignoreClientBandwidth: true
+bandwidth:
+  up: 100 mbps
+  down: 100 mbps
 quic:
   initStreamReceiveWindow: 8388608
   maxStreamReceiveWindow: 8388608
@@ -154,11 +156,6 @@ quic:
   maxIdleTimeout: 60s
   keepAlivePeriod: 60s
   disablePathMTUDiscovery: false
-masquerade: 
-  type: proxy
-  proxy:
-    url: https://news.ycombinator.com/
-    rewriteHost: true
 fastOpen: true
 lazy: true
 socks5:
@@ -308,14 +305,14 @@ outbounds:
       addr: 127.0.0.1:40000
 acl:
   inline:
-    - reject(geoip:private)
-    - outbound:warp(all)"
+    - direct(10.0.0.0/8)
+    - direct(172.16.0.0/12)
+    - direct(192.168.0.0/16)
+    - direct(fc00::/7)
+    - warp(all)"
 fi
     
 echo "$config_yaml" > config.yaml
-
-# Step 5: Run the binary and check the log
-/root/hysteria/$BINARY_NAME server -c /root/hysteria/config.yaml > hysteria.log 2>&1 &
 
 # Step 6: Create a system service
 cat > /etc/systemd/system/hysteria.service <<EOL
